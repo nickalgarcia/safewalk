@@ -441,14 +441,23 @@ footer{padding:32px 6vw;border-top:1px solid var(--border);display:flex;align-it
       <p class="cta-sub">We'll walk you through the full pickup flow in 15 minutes. Free setup for early adopters.</p>
     </div>
     <div class="cta-right">
-      <div class="cta-form-label">Your name & organization</div>
-      <input type="text" placeholder="Jane Smith — Lincoln Elementary"/>
-      <div class="cta-form-label">Email address</div>
-      <div class="cta-input-row">
-        <input type="email" placeholder="jane@school.org"/>
-        <button class="btn-cta" onclick="handleSubmit()">Request demo</button>
+      <div data-fs-success style="display:none;text-align:center;padding:24px 0">
+        <div style="font-size:32px;margin-bottom:12px">✓</div>
+        <div style="font-size:17px;font-weight:500;color:#fff;margin-bottom:8px">You're on the list!</div>
+        <div style="font-size:14px;color:rgba(255,255,255,0.55)">We'll be in touch within one business day.</div>
       </div>
-      <div class="cta-note">No commitment. We'll reach out within one business day.</div>
+      <div data-fs-error style="font-size:13px;color:#FCA5A5;margin-bottom:8px;"></div>
+      <form id="demo-form">
+        <div class="cta-form-label">Your name &amp; organization</div>
+        <input type="text" name="name" placeholder="Jane Smith — Lincoln Elementary" required/>
+        <div class="cta-form-label" style="margin-top:10px;">Email address</div>
+        <span data-fs-error="email" style="font-size:12px;color:#FCA5A5;display:block;margin-bottom:4px;"></span>
+        <div class="cta-input-row">
+          <input type="email" name="email" placeholder="jane@school.org" data-fs-field required/>
+          <button type="submit" class="btn-cta" data-fs-submit-btn>Request demo</button>
+        </div>
+        <div class="cta-note">No commitment. We'll reach out within one business day.</div>
+      </form>
     </div>
   </div>
 </section>
@@ -474,18 +483,10 @@ document.querySelectorAll('.steps, .who-grid, .features-grid').forEach(grid => {
   });
 });
 
-// Demo form
-function handleSubmit() {
-  const btn = document.querySelector('.btn-cta');
-  btn.textContent = '✓ Sent!';
-  btn.style.background = '#16a34a';
-  btn.disabled = true;
-  setTimeout(() => {
-    btn.textContent = 'Request demo';
-    btn.style.background = '';
-    btn.disabled = false;
-  }, 3000);
-}
+// Formspree ajax SDK
+window.formspree = window.formspree || function () { (formspree.q = formspree.q || []).push(arguments); };
+formspree('initForm', { formElement: '#demo-form', formId: 'mojbpwpj' });
 </script>
+<script src="https://unpkg.com/@formspree/ajax@1" defer></script>
 </body>
 </html>
