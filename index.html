@@ -4,7 +4,7 @@
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>Safewalk — Safe, verified child pickup</title>
-<meta name="description" content="Safewalk brings order and safety to child pickup for schools, daycares, and churches. Real-time car line management for the people who run it."/>
+<meta name="description" content="Safewalk is a real-time child pickup and car line management app for schools, daycares, and churches. Verified release logs, live classroom displays, and barcode scanning — built by someone who runs pickup every Sunday."/>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
@@ -127,8 +127,24 @@ h1 em{font-style:italic;color:var(--sky)}
 .feature-title{font-size:17px;font-weight:500;color:var(--navy);margin-bottom:8px}
 .feature-body{font-size:14px;color:var(--muted);line-height:1.65;font-weight:300}
 
-/* QUOTE */
-.quote-section{padding:96px 6vw;background:var(--cloud)}
+/* MID-PAGE CTA */
+.mid-cta{text-align:center;padding:0 6vw 80px;background:var(--white)}
+.mid-cta-inner{background:var(--cloud);border:1px solid var(--border);border-radius:16px;padding:40px;display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap;max-width:860px;margin:0 auto}
+.mid-cta-text{text-align:left}
+.mid-cta-title{font-size:20px;font-weight:500;color:var(--navy);margin:0 0 6px}
+.mid-cta-sub{font-size:15px;color:var(--muted);margin:0;font-weight:300}
+.btn-mid{background:var(--navy);color:var(--white);border:none;border-radius:10px;padding:13px 28px;font-family:var(--sans);font-size:15px;font-weight:500;cursor:pointer;text-decoration:none;transition:all 0.2s;white-space:nowrap;display:inline-block}
+.btn-mid:hover{background:#0a3d5c;transform:translateY(-1px)}
+
+/* FOUNDER */
+.founder-section{padding:96px 6vw;background:var(--white)}
+.founder-inner{max-width:760px;margin:0 auto;display:flex;gap:40px;align-items:flex-start;flex-wrap:wrap}
+.founder-avatar{width:72px;height:72px;border-radius:16px;background:var(--navy);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-family:var(--serif);font-size:28px;color:var(--white);font-style:italic}
+.founder-body{flex:1;min-width:260px}
+.founder-label{font-size:12px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:var(--sky);margin:0 0 12px}
+.founder-quote{font-family:var(--serif);font-size:clamp(20px,3vw,28px);color:var(--navy);line-height:1.4;margin:0 0 20px;font-style:italic}
+.founder-body-text{font-size:15px;color:var(--muted);line-height:1.7;font-weight:300;margin:0 0 16px}
+.founder-sig{font-size:14px;color:var(--navy);font-weight:500}
 .quote-inner{max-width:700px;margin:0 auto;text-align:center}
 .quote-mark{font-family:var(--serif);font-size:96px;color:var(--sky-light);line-height:0.5;margin-bottom:16px}
 .quote-text{font-family:var(--serif);font-size:clamp(22px,3.5vw,34px);color:var(--navy);line-height:1.4;margin-bottom:28px;font-style:italic}
@@ -229,7 +245,7 @@ footer{padding:32px 6vw;border-top:1px solid var(--border);display:flex;align-it
       <a href="#how" class="btn-ghost">See how it works <span>↓</span></a>
     </div>
     <div class="hero-proof">
-      <span class="proof-label">Trusted by organizations like</span>
+      <span class="proof-label">Built for</span>
       <div class="proof-orgs">
         <span class="proof-org">Elementary schools</span>
         <span class="proof-org">Daycares</span>
@@ -319,6 +335,17 @@ footer{padding:32px 6vw;border-top:1px solid var(--border);display:flex;align-it
   </div>
 </section>
 
+<!-- MID-PAGE CTA -->
+<div class="mid-cta" data-reveal>
+  <div class="mid-cta-inner">
+    <div class="mid-cta-text">
+      <p class="mid-cta-title">Seen enough? Let's talk.</p>
+      <p class="mid-cta-sub">15 minutes. We'll show you the full pickup flow live.</p>
+    </div>
+    <a href="#demo" class="btn-mid">Request a free demo →</a>
+  </div>
+</div>
+
 <!-- WHO -->
 <section class="who-section">
   <div class="who-bg">
@@ -393,12 +420,17 @@ footer{padding:32px 6vw;border-top:1px solid var(--border);display:flex;align-it
   </div>
 </section>
 
-<!-- QUOTE -->
-<section class="quote-section">
-  <div class="quote-inner" data-reveal>
-    <div class="quote-mark">"</div>
-    <p class="quote-text">Before Safewalk, pickup was the most stressful 20 minutes of our week. Now it just&hellip; works.</p>
-    <p class="quote-attr"><strong>Children's Ministry Director</strong> &mdash; Live pilot church, San Antonio TX</p>
+<!-- FOUNDER -->
+<section class="founder-section">
+  <div class="founder-inner" data-reveal>
+    <div class="founder-avatar">N</div>
+    <div class="founder-body">
+      <p class="founder-label">Why I built this</p>
+      <p class="founder-quote">"I run pickup every Sunday at my church — and I built Safewalk because nothing else was simple enough for volunteers to just pick up and use."</p>
+      <p class="founder-body-text">Safewalk started as an internal tool for our children's ministry car line. It's been running live every week and has made pickup measurably safer and calmer. Now I'm bringing it to schools, daycares, and other churches who are still managing pickup with paper lists, walkie-talkies, or nothing at all.</p>
+      <p class="founder-body-text">I'm offering free setup to early adopters because I want to build this the right way — alongside the people who actually run pickup every day.</p>
+      <p class="founder-sig">— Nick, Founder of Safewalk</p>
+    </div>
   </div>
 </section>
 
@@ -409,7 +441,7 @@ footer{padding:32px 6vw;border-top:1px solid var(--border);display:flex;align-it
     <div class="cta-blob cta-blob-2"></div>
     <div class="cta-left">
       <h2 class="cta-title">See Safewalk in action</h2>
-      <p class="cta-sub">We'll walk you through the full pickup flow in 15 minutes. Free setup for early adopters.</p>
+      <p class="cta-sub">We'll walk you through the full pickup flow in 15 minutes. Free setup for early adopters — paid plans from $49/mo after.</p>
     </div>
     <div class="cta-right">
 
@@ -436,7 +468,7 @@ footer{padding:32px 6vw;border-top:1px solid var(--border);display:flex;align-it
           <div class="spinner" id="spinner"></div>
           <span class="btn-label">Request a free demo →</span>
         </button>
-        <div class="cta-note">No commitment. We'll reach out within one business day.</div>
+        <div class="cta-note">No commitment. We'll reach out within one business day.<br/>Or email us directly: <a href="mailto:hello@getsafewalk.com" style="color:rgba(255,255,255,0.5);text-decoration:underline;">hello@getsafewalk.com</a></div>
         <div class="field-error" id="err-general" style="text-align:center;margin-top:8px;"></div>
       </form>
 
@@ -446,7 +478,7 @@ footer{padding:32px 6vw;border-top:1px solid var(--border);display:flex;align-it
 
 <footer>
   <span class="footer-logo">Safe<span>walk</span></span>
-  <span class="footer-copy">&copy; 2025 Safewalk. Built with care for the people who keep kids safe.</span>
+  <span class="footer-copy">&copy; 2026 Safewalk &mdash; A <a href="#" style="color:var(--muted);text-decoration:none;">Groundswell</a> product &mdash; <a href="mailto:hello@getsafewalk.com" style="color:var(--muted);text-decoration:none;">hello@getsafewalk.com</a></span>
 </footer>
 
 <script>
