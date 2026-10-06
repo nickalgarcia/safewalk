@@ -1,559 +1,410 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Safewalk — Safe, verified child pickup</title>
-<meta name="description" content="Safewalk is a real-time child pickup and car line management app for schools, daycares, and churches. Verified release logs, live classroom displays, and barcode scanning — built by someone who runs pickup every Sunday."/>
-<link rel="preconnect" href="https://fonts.googleapis.com"/>
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
-<style>
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-:root{
-  --navy:#0C4A6E;
-  --sky:#0EA5E9;
-  --sky-light:#BAE6FD;
-  --cloud:#F0F9FF;
-  --green:#22C55E;
-  --green-light:#DCFCE7;
-  --ink:#0F172A;
-  --muted:#475569;
-  --border:#CBD5E1;
-  --white:#FFFFFF;
-  --serif:'DM Serif Display',Georgia,serif;
-  --sans:'DM Sans',system-ui,sans-serif;
-}
-html{scroll-behavior:smooth}
-body{font-family:var(--sans);color:var(--ink);background:var(--white);overflow-x:hidden;-webkit-font-smoothing:antialiased}
+<meta name="description" content="Safewalk is a verified child pickup app for churches, schools and daycares. Scan the tag, call the child to the door, and every release is logged.">
+<link rel="canonical" href="https://getsafewalk.com/">
+<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
 
-/* NAV */
-nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:0 6vw;height:64px;display:flex;align-items:center;justify-content:space-between;background:rgba(255,255,255,0.92);backdrop-filter:blur(12px);border-bottom:1px solid rgba(203,213,225,0.5)}
-.nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none}
-.logo-mark{width:34px;height:34px;background:var(--navy);border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
-.logo-mark svg{width:18px;height:18px}
-.logo-text{font-family:var(--serif);font-size:20px;color:var(--navy);letter-spacing:-0.3px}
-.logo-text span{color:var(--sky)}
-.nav-cta{background:var(--navy);color:var(--white);border:none;border-radius:8px;padding:9px 20px;font-family:var(--sans);font-size:14px;font-weight:500;cursor:pointer;text-decoration:none;transition:background 0.2s,transform 0.15s}
-.nav-cta:hover{background:#0a3d5c;transform:translateY(-1px)}
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Safewalk">
+<meta property="og:title" content="Safewalk — Safe, verified child pickup">
+<meta property="og:description" content="Safewalk is a verified child pickup app for churches, schools and daycares. Scan the tag, call the child to the door, and every release is logged.">
+<meta property="og:url" content="https://getsafewalk.com/">
+<!-- TODO(content): add og:image / twitter:image once a share image exists -->
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Safewalk — Safe, verified child pickup">
+<meta name="twitter:description" content="Safewalk is a verified child pickup app for churches, schools and daycares. Scan the tag, call the child to the door, and every release is logged.">
 
-/* HERO */
-.hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding:96px 6vw 80px;position:relative;overflow:hidden;background:var(--cloud)}
-.hero-bg{position:absolute;inset:0;pointer-events:none;overflow:hidden}
-.hero-blob{position:absolute;border-radius:50%;filter:blur(80px);opacity:0.35}
-.blob-1{width:600px;height:600px;background:var(--sky);top:-100px;right:-150px}
-.blob-2{width:400px;height:400px;background:var(--green);bottom:-80px;left:-100px;opacity:0.2}
-.hero-inner{position:relative;max-width:760px}
-.hero-badge{display:inline-flex;align-items:center;gap:8px;background:var(--white);border:1px solid var(--border);border-radius:99px;padding:6px 14px 6px 8px;font-size:13px;color:var(--muted);margin-bottom:32px}
-.badge-dot{width:8px;height:8px;border-radius:50%;background:var(--green);flex-shrink:0}
-h1{font-family:var(--serif);font-size:clamp(44px,7vw,82px);line-height:1.05;color:var(--navy);margin-bottom:24px;letter-spacing:-1px}
-h1 em{font-style:italic;color:var(--sky)}
-.hero-sub{font-size:clamp(17px,2.2vw,21px);color:var(--muted);line-height:1.65;max-width:540px;font-weight:300;margin-bottom:40px}
-.hero-actions{display:flex;align-items:center;gap:16px;flex-wrap:wrap}
-.btn-primary{background:var(--navy);color:var(--white);border:none;border-radius:10px;padding:14px 28px;font-family:var(--sans);font-size:16px;font-weight:500;cursor:pointer;text-decoration:none;transition:all 0.2s;display:inline-block}
-.btn-primary:hover{background:#0a3d5c;transform:translateY(-2px);box-shadow:0 8px 24px rgba(12,74,110,0.25)}
-.btn-ghost{color:var(--navy);font-size:15px;font-weight:500;text-decoration:none;display:flex;align-items:center;gap:6px;transition:gap 0.2s}
-.btn-ghost:hover{gap:10px}
-.hero-proof{margin-top:56px;display:flex;align-items:center;gap:24px;flex-wrap:wrap}
-.proof-label{font-size:13px;color:var(--muted)}
-.proof-orgs{display:flex;gap:8px;flex-wrap:wrap}
-.proof-org{background:var(--white);border:1px solid var(--border);border-radius:6px;padding:5px 12px;font-size:12px;font-weight:500;color:var(--navy)}
-
-/* MOCKUP STRIP */
-.mockup-section{padding:0 6vw 80px;background:var(--cloud)}
-.mockup-card{background:var(--white);border:1px solid var(--border);border-radius:20px;overflow:hidden;box-shadow:0 24px 64px rgba(12,74,110,0.12);max-width:900px;margin:0 auto}
-.mockup-bar{background:var(--navy);padding:12px 20px;display:flex;align-items:center;gap:12px}
-.mockup-dots span{width:10px;height:10px;border-radius:50%;display:inline-block;margin-right:5px}
-.dot-r{background:#FF5F57}.dot-y{background:#FEBC2E}.dot-g{background:#28C840}
-.mockup-bar-title{color:rgba(255,255,255,0.6);font-size:13px;margin-left:auto;margin-right:auto}
-.mockup-body{padding:28px;background:#F8FAFC}
-.mock-header-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px}
-.mock-logo-sm{font-family:var(--serif);font-size:18px;color:var(--navy)}
-.mock-session{background:var(--navy);color:var(--white);font-size:12px;border-radius:6px;padding:5px 12px;font-weight:500}
-.mock-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:20px}
-.mock-stat{background:var(--white);border:1px solid var(--border);border-radius:12px;padding:16px}
-.mock-stat-val{font-size:28px;font-weight:500;color:var(--navy);line-height:1}
-.mock-stat-label{font-size:12px;color:var(--muted);margin-top:4px}
-.mock-stat-badge{display:inline-block;font-size:11px;font-weight:500;padding:2px 8px;border-radius:99px;margin-top:6px}
-.badge-green{background:var(--green-light);color:#15803D}
-.badge-sky{background:#E0F2FE;color:#0369A1}
-.badge-amber{background:#FEF3C7;color:#92400E}
-.mock-queue{background:var(--white);border:1px solid var(--border);border-radius:12px;overflow:hidden}
-.mock-queue-head{padding:12px 16px;display:flex;justify-content:space-between;font-size:12px;font-weight:500;color:var(--muted);border-bottom:1px solid var(--border);text-transform:uppercase;letter-spacing:0.05em}
-.mock-row{padding:12px 16px;display:flex;align-items:center;gap:12px;border-bottom:1px solid #F1F5F9}
-.mock-row:last-child{border-bottom:none}
-.mock-avatar{width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:500;flex-shrink:0}
-.av-blue{background:#DBEAFE;color:#1D4ED8}.av-green{background:var(--green-light);color:#15803D}.av-purple{background:#EDE9FE;color:#6D28D9}
-.mock-name{font-size:14px;font-weight:500;flex:1}
-.mock-room{font-size:12px;color:var(--muted)}
-.mock-status{font-size:11px;font-weight:500;padding:3px 10px;border-radius:99px}
-.st-ready{background:var(--green-light);color:#15803D}.st-waiting{background:#FEF3C7;color:#92400E}.st-incar{background:#E0F2FE;color:#0369A1}
-
-/* HOW IT WORKS */
-.section{padding:96px 6vw}
-.section-label{font-size:12px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:var(--sky);margin-bottom:16px}
-.section-title{font-family:var(--serif);font-size:clamp(32px,5vw,52px);color:var(--navy);line-height:1.1;margin-bottom:16px;letter-spacing:-0.5px}
-.section-sub{font-size:17px;color:var(--muted);font-weight:300;line-height:1.65;max-width:520px}
-.steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:32px;margin-top:56px}
-.step-num{font-family:var(--serif);font-size:64px;color:var(--sky-light);line-height:1;margin-bottom:-8px;font-style:italic}
-.step-title{font-size:19px;font-weight:500;color:var(--navy);margin-bottom:10px}
-.step-body{font-size:15px;color:var(--muted);line-height:1.65;font-weight:300}
-
-/* WHO */
-.who-section{padding:96px 6vw;background:var(--navy);position:relative;overflow:hidden}
-.who-bg{position:absolute;inset:0;pointer-events:none}
-.who-blob{position:absolute;border-radius:50%;filter:blur(100px)}
-.wb-1{width:500px;height:500px;background:var(--sky);opacity:0.08;top:-100px;right:-100px}
-.wb-2{width:300px;height:300px;background:var(--green);opacity:0.06;bottom:-50px;left:50px}
-.who-inner{position:relative}
-.who-label{font-size:12px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:var(--sky);margin-bottom:16px}
-.who-title{font-family:var(--serif);font-size:clamp(32px,5vw,52px);color:var(--white);line-height:1.1;margin-bottom:48px;letter-spacing:-0.5px}
-.who-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:20px}
-.who-card{background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:16px;padding:28px 24px;transition:background 0.2s,transform 0.2s}
-.who-card:hover{background:rgba(255,255,255,0.1);transform:translateY(-4px)}
-.who-icon{width:44px;height:44px;background:rgba(14,165,233,0.15);border-radius:12px;display:flex;align-items:center;justify-content:center;margin-bottom:16px}
-.who-icon svg{width:22px;height:22px;stroke:var(--sky)}
-.who-card-title{font-size:17px;font-weight:500;color:var(--white);margin-bottom:8px}
-.who-card-body{font-size:14px;color:rgba(255,255,255,0.55);line-height:1.65;font-weight:300}
-
-/* FEATURES */
-.features-section{padding:96px 6vw;background:#F8FAFC}
-.features-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:24px;margin-top:56px}
-.feature-card{background:var(--white);border:1px solid var(--border);border-radius:16px;padding:28px 24px;transition:box-shadow 0.2s,transform 0.2s}
-.feature-card:hover{box-shadow:0 12px 32px rgba(12,74,110,0.08);transform:translateY(-3px)}
-.feature-icon{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;margin-bottom:16px}
-.fi-blue{background:#E0F2FE}.fi-green{background:var(--green-light)}.fi-purple{background:#EDE9FE}.fi-amber{background:#FEF3C7}
-.feature-icon svg{width:22px;height:22px}
-.feature-title{font-size:17px;font-weight:500;color:var(--navy);margin-bottom:8px}
-.feature-body{font-size:14px;color:var(--muted);line-height:1.65;font-weight:300}
-
-/* MID-PAGE CTA */
-.mid-cta{text-align:center;padding:0 6vw 80px;background:var(--white)}
-.mid-cta-inner{background:var(--cloud);border:1px solid var(--border);border-radius:16px;padding:40px;display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap;max-width:860px;margin:0 auto}
-.mid-cta-text{text-align:left}
-.mid-cta-title{font-size:20px;font-weight:500;color:var(--navy);margin:0 0 6px}
-.mid-cta-sub{font-size:15px;color:var(--muted);margin:0;font-weight:300}
-.btn-mid{background:var(--navy);color:var(--white);border:none;border-radius:10px;padding:13px 28px;font-family:var(--sans);font-size:15px;font-weight:500;cursor:pointer;text-decoration:none;transition:all 0.2s;white-space:nowrap;display:inline-block}
-.btn-mid:hover{background:#0a3d5c;transform:translateY(-1px)}
-
-/* FOUNDER */
-.founder-section{padding:96px 6vw;background:var(--white)}
-.founder-inner{max-width:760px;margin:0 auto;display:flex;gap:40px;align-items:flex-start;flex-wrap:wrap}
-.founder-avatar{width:72px;height:72px;border-radius:16px;background:var(--navy);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-family:var(--serif);font-size:28px;color:var(--white);font-style:italic}
-.founder-body{flex:1;min-width:260px}
-.founder-label{font-size:12px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:var(--sky);margin:0 0 12px}
-.founder-quote{font-family:var(--serif);font-size:clamp(20px,3vw,28px);color:var(--navy);line-height:1.4;margin:0 0 20px;font-style:italic}
-.founder-body-text{font-size:15px;color:var(--muted);line-height:1.7;font-weight:300;margin:0 0 16px}
-.founder-sig{font-size:14px;color:var(--navy);font-weight:500}
-.quote-inner{max-width:700px;margin:0 auto;text-align:center}
-.quote-mark{font-family:var(--serif);font-size:96px;color:var(--sky-light);line-height:0.5;margin-bottom:16px}
-.quote-text{font-family:var(--serif);font-size:clamp(22px,3.5vw,34px);color:var(--navy);line-height:1.4;margin-bottom:28px;font-style:italic}
-.quote-attr{font-size:14px;color:var(--muted)}
-.quote-attr strong{color:var(--navy);font-weight:500}
-
-/* CTA */
-.cta-section{padding:96px 6vw;background:var(--white)}
-.cta-inner{background:var(--navy);border-radius:24px;padding:72px 6vw;display:flex;align-items:center;justify-content:space-between;gap:48px;flex-wrap:wrap;position:relative;overflow:hidden}
-.cta-blob{position:absolute;border-radius:50%;filter:blur(80px);pointer-events:none}
-.cta-blob-1{width:400px;height:400px;background:var(--sky);opacity:0.12;top:-100px;right:-100px}
-.cta-blob-2{width:300px;height:300px;background:var(--green);opacity:0.08;bottom:-100px;left:50px}
-.cta-left{position:relative;flex:1;min-width:260px}
-.cta-title{font-family:var(--serif);font-size:clamp(28px,4vw,44px);color:var(--white);line-height:1.15;margin-bottom:12px;letter-spacing:-0.5px}
-.cta-sub{font-size:16px;color:rgba(255,255,255,0.6);font-weight:300;line-height:1.6}
-.cta-right{position:relative;min-width:280px;flex:1;max-width:460px}
-.cta-form-label{font-size:13px;color:rgba(255,255,255,0.55);margin-bottom:6px}
-.cta-field{margin-bottom:12px}
-input[type="text"],input[type="email"]{width:100%;background:rgba(255,255,255,0.1);border:1.5px solid rgba(255,255,255,0.2);border-radius:10px;padding:12px 16px;font-family:var(--sans);font-size:15px;color:var(--white);outline:none;transition:border 0.2s,background 0.2s}
-input[type="text"]::placeholder,input[type="email"]::placeholder{color:rgba(255,255,255,0.35)}
-input[type="text"]:focus,input[type="email"]:focus{border-color:var(--sky);background:rgba(255,255,255,0.15)}
-input.input-error{border-color:#FCA5A5 !important}
-.field-error{font-size:12px;color:#FCA5A5;margin-top:4px;display:none}
-.field-error.visible{display:block}
-.btn-cta{width:100%;background:var(--sky);color:var(--white);border:none;border-radius:10px;padding:14px 24px;font-family:var(--sans);font-size:16px;font-weight:500;cursor:pointer;transition:all 0.2s;margin-top:4px;display:flex;align-items:center;justify-content:center;gap:8px}
-.btn-cta:hover:not(:disabled){background:#0284c7;transform:translateY(-1px)}
-.btn-cta:disabled{opacity:0.7;cursor:not-allowed;transform:none}
-.cta-note{font-size:12px;color:rgba(255,255,255,0.35);text-align:center;margin-top:10px}
-
-/* Success state */
-.form-success{display:none;text-align:center;padding:32px 16px;animation:fadeUp 0.4s ease both}
-.form-success.visible{display:block}
-.success-icon{width:56px;height:56px;background:rgba(34,197,94,0.15);border:2px solid rgba(34,197,94,0.4);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 16px;font-size:24px}
-.success-title{font-size:20px;font-weight:500;color:var(--white);margin-bottom:8px}
-.success-sub{font-size:14px;color:rgba(255,255,255,0.55);line-height:1.6}
-
-/* Spinner */
-.spinner{width:18px;height:18px;border:2px solid rgba(255,255,255,0.3);border-top-color:#fff;border-radius:50%;animation:spin 0.7s linear infinite;display:none}
-.btn-cta.loading .spinner{display:block}
-.btn-cta.loading .btn-label{display:none}
-
-/* FOOTER */
-footer{padding:32px 6vw;border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px}
-.footer-logo{font-family:var(--serif);font-size:17px;color:var(--navy)}
-.footer-logo span{color:var(--sky)}
-.footer-copy{font-size:13px;color:var(--muted)}
-
-/* ANIMATIONS */
-@keyframes fadeUp{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:translateY(0)}}
-@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
-@keyframes spin{to{transform:rotate(360deg)}}
-.hero-inner{animation:fadeUp 0.7s ease both}
-.mockup-card{animation:float 6s ease-in-out infinite}
-[data-reveal]{opacity:0;transform:translateY(24px);transition:opacity 0.6s ease,transform 0.6s ease}
-[data-reveal].visible{opacity:1;transform:translateY(0)}
-
-/* MOBILE */
-@media(max-width:640px){
-  .mock-stats{grid-template-columns:1fr 1fr}
-  .cta-inner{padding:48px 24px}
-  footer{flex-direction:column;text-align:center}
-}
-</style>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Young+Serif&amp;family=Figtree:wght@400;500;600;700&amp;family=DM+Sans:wght@400;500&amp;family=DM+Serif+Display&amp;display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/css/tokens.css">
+<link rel="stylesheet" href="/assets/css/site.css">
 </head>
 <body>
 
-<nav>
-  <a class="nav-logo" href="#">
-    <div class="logo-mark">
-      <svg viewBox="0 0 18 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <circle cx="9" cy="4.5" r="2.5" fill="white"/>
-        <path d="M5.5 10C5.5 8.6 7 7.5 9 7.5C11 7.5 12.5 8.6 12.5 10L11.5 15H6.5L5.5 10Z" fill="white"/>
-        <path d="M6.5 15L5 19M11.5 15L13 19" stroke="white" stroke-width="1.5" stroke-linecap="round"/>
-        <path d="M2 11.5C2 11.5 1 10 1 8.5C1 5 4.5 3 9 3" stroke="rgba(255,255,255,0.5)" stroke-width="1" stroke-linecap="round" stroke-dasharray="2 2"/>
-        <path d="M16 11.5C16 11.5 17 10 17 8.5C17 5 13.5 3 9 3" stroke="rgba(255,255,255,0.5)" stroke-width="1" stroke-linecap="round" stroke-dasharray="2 2"/>
-      </svg>
+<header class="site-header">
+  <nav class="site-nav container" aria-label="Main">
+    <a class="brand" href="#top">
+      <span class="brand__mark">
+        <svg width="18" height="20" viewBox="0 0 18 20" fill="none" aria-hidden="true"><circle cx="9" cy="4.5" r="2.5" fill="#FFFFFF"/><path d="M5.5 10C5.5 8.6 7 7.5 9 7.5C11 7.5 12.5 8.6 12.5 10L11.5 15H6.5L5.5 10Z" fill="#FFFFFF"/><path d="M6.5 15L5 19M11.5 15L13 19" stroke="#FFFFFF" stroke-width="1.5" stroke-linecap="round"/></svg>
+      </span>
+      <span class="brand__name">Safewalk</span>
+    </a>
+    <div class="site-nav__links">
+      <a href="#how">How it works</a>
+      <a href="#who">Who it's for</a>
+      <a href="#faq">Safety &amp; data</a>
+      <a href="#pricing">Pricing</a>
     </div>
-    <span class="logo-text">Safe<span>walk</span></span>
-  </a>
-  <a href="#demo" class="nav-cta">Request a demo</a>
-</nav>
+    <a class="btn btn--nav" href="#demo">Book a demo</a>
+  </nav>
+</header>
+
+<main>
 
 <!-- HERO -->
-<section class="hero">
-  <div class="hero-bg">
-    <div class="hero-blob blob-1"></div>
-    <div class="hero-blob blob-2"></div>
+<section class="hero container" id="top">
+  <div class="hero__copy">
+    <span class="eyebrow hero__eyebrow">Safe, verified child pickup</span>
+    <h1 class="hero__title">Know exactly who walked out with every child.</h1>
+    <p class="hero__lede">A verified handoff for churches, schools and daycares. Scan the tag, call the child to the door, and every release is logged.</p>
+    <div class="hero__actions">
+      <a class="btn btn--primary" href="#demo">Book a 15-minute demo</a>
+      <a class="btn btn--secondary" href="#how">See how pickup works</a>
+    </div>
+    <figure class="quote-row">
+      <span class="photo-slot photo-slot--avatar" aria-hidden="true">
+        <!-- TODO(content): add /assets/photos/quote-avatar.jpg, then uncomment:
+        <img class="photo-slot__img" src="/assets/photos/quote-avatar.jpg" alt="" width="96" height="96" loading="lazy">
+        -->
+      </span>
+      <!-- TODO(content): replace the quote, [NAME] and [CHURCH NAME] below -->
+      <blockquote class="quote-row__text">
+        <span class="quote-row__quote">“[Short quote from your children's director about Sunday pickup]”</span>
+        <strong class="quote-row__cite">[NAME], [CHURCH NAME]</strong>
+      </blockquote>
+    </figure>
   </div>
-  <div class="hero-inner">
-    <div class="hero-badge">
-      <span class="badge-dot"></span>
-      Built for the people who run pickup every day
-    </div>
-    <h1>Every child,<br/><em>safely home.</em></h1>
-    <p class="hero-sub">Safewalk brings real-time order and verified security to child pickup — for schools, daycares, churches, and any organization that cares who walks out the door.</p>
-    <div class="hero-actions">
-      <a href="#demo" class="btn-primary">Request a free demo →</a>
-      <a href="#how" class="btn-ghost">See how it works <span>↓</span></a>
-    </div>
-    <div class="hero-proof">
-      <span class="proof-label">Built for</span>
-      <div class="proof-orgs">
-        <span class="proof-org">Elementary schools</span>
-        <span class="proof-org">Daycares</span>
-        <span class="proof-org">Churches</span>
-        <span class="proof-org">After-school programs</span>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- APP MOCKUP -->
-<section class="mockup-section">
-  <div class="mockup-card">
-    <div class="mockup-bar">
-      <div class="mockup-dots">
-        <span class="dot-r"></span><span class="dot-y"></span><span class="dot-g"></span>
-      </div>
-      <span class="mockup-bar-title">Safewalk — Live Pickup Dashboard</span>
-    </div>
-    <div class="mockup-body">
-      <div class="mock-header-row">
-        <span class="mock-logo-sm">Safewalk</span>
-        <span class="mock-session">● Sunday Service 10:30am</span>
-      </div>
-      <div class="mock-stats">
-        <div class="mock-stat">
-          <div class="mock-stat-val">47</div>
-          <div class="mock-stat-label">Checked in</div>
-          <span class="mock-stat-badge badge-sky">2 services</span>
-        </div>
-        <div class="mock-stat">
-          <div class="mock-stat-val">6</div>
-          <div class="mock-stat-label">In car line</div>
-          <span class="mock-stat-badge badge-amber">Active now</span>
-        </div>
-        <div class="mock-stat">
-          <div class="mock-stat-val">31</div>
-          <div class="mock-stat-label">Picked up</div>
-          <span class="mock-stat-badge badge-green">All verified</span>
-        </div>
-      </div>
-      <div class="mock-queue">
-        <div class="mock-queue-head"><span>Child</span><span>Room</span><span>Status</span></div>
-        <div class="mock-row">
-          <div class="mock-avatar av-blue">EJ</div>
-          <div style="flex:1"><div class="mock-name">Emma Johnson</div><div class="mock-room">Rm 3 · Butterflies</div></div>
-          <span class="mock-status st-ready">Ready</span>
-        </div>
-        <div class="mock-row">
-          <div class="mock-avatar av-green">LM</div>
-          <div style="flex:1"><div class="mock-name">Liam Martinez</div><div class="mock-room">Rm 1 · Rainbows</div></div>
-          <span class="mock-status st-incar">In car line</span>
-        </div>
-        <div class="mock-row">
-          <div class="mock-avatar av-purple">AS</div>
-          <div style="flex:1"><div class="mock-name">Ava Smith</div><div class="mock-room">Rm 5 · Stars</div></div>
-          <span class="mock-status st-waiting">Waiting</span>
-        </div>
-      </div>
+  <div class="hero__media">
+    <figure class="photo-slot photo-slot--hero">
+      <span class="photo-slot__placeholder">[Warm photo: a volunteer kneeling to hand a child to a parent]</span>
+      <!-- TODO(content): add /assets/photos/hero-home.jpg (4:5.4 portrait, e.g. 920×1242) then uncomment:
+      <img class="photo-slot__img" src="/assets/photos/hero-home.jpg" alt="A volunteer kneeling to hand a child to a parent at pickup" width="920" height="1242">
+      -->
+    </figure>
+    <div class="match-chip">
+      <span class="match-chip__icon" aria-hidden="true">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>
+      </span>
+      <span class="match-chip__text">
+        <strong class="match-chip__title">Tag #4821 matches</strong>
+        <span class="match-chip__detail">Liam &amp; Sofia → Martinez family</span>
+      </span>
     </div>
   </div>
 </section>
 
-<!-- HOW IT WORKS -->
-<section class="section" id="how">
-  <div data-reveal>
-    <div class="section-label">How it works</div>
-    <h2 class="section-title">Pickup in three<br/>simple steps</h2>
-    <p class="section-sub">No training required. No paper lists. No walkie-talkies. Just a phone and a few taps.</p>
-  </div>
-  <div class="steps">
-    <div class="step" data-reveal>
-      <div class="step-num">01</div>
-      <h3 class="step-title">A parent arrives</h3>
-      <p class="step-body">Your volunteer scans the parent's barcode tag or looks them up by name. Their authorized children appear instantly — no paper, no guessing.</p>
-    </div>
-    <div class="step" data-reveal>
-      <div class="step-num">02</div>
-      <h3 class="step-title">Rooms are notified</h3>
-      <p class="step-body">Each classroom sees a live display showing exactly which children are being called out. Teachers bring kids to the door when their name appears.</p>
-    </div>
-    <div class="step" data-reveal>
-      <div class="step-num">03</div>
-      <h3 class="step-title">Child walks out safely</h3>
-      <p class="step-body">The volunteer confirms the handoff, the record is logged, and that child is marked picked up. Every release is tracked automatically.</p>
-    </div>
+<!-- TRUST BAND -->
+<section class="band--plum" id="who">
+  <div class="trust container">
+    <a class="trust__item" href="/churches/">
+      <span class="trust__title">Churches →</span>
+      <span class="trust__desc">Sunday check-out, with the Planning Center tags you already print.</span>
+    </a>
+    <a class="trust__item" id="schools" href="#demo">
+      <span class="trust__title">Schools →</span>
+      <span class="trust__desc">A calmer 3pm car line, called from a live dashboard instead of a radio.</span>
+    </a>
+    <a class="trust__item" id="daycares" href="#demo">
+      <span class="trust__title">Daycares &amp; after-school →</span>
+      <span class="trust__desc">Authorized adults verified in a second, with a record of every release.</span>
+    </a>
   </div>
 </section>
 
-<!-- MID-PAGE CTA -->
-<div class="mid-cta" data-reveal>
-  <div class="mid-cta-inner">
-    <div class="mid-cta-text">
-      <p class="mid-cta-title">Seen enough? Let's talk.</p>
-      <p class="mid-cta-sub">15 minutes. We'll show you the full pickup flow live.</p>
+<!-- PRODUCT DASHBOARD (from the original site) -->
+<section class="container section-stack section--how" id="how">
+  <div class="section-intro section-intro--medium">
+    <span class="eyebrow">How it works</span>
+    <h2 class="section-title">One handoff, three taps.</h2>
+    <p class="lede">And one live dashboard that shows who's checked in, who's in line, and who's gone home with a verified adult.</p>
+  </div>
+  <div class="how__layout">
+    <div class="mock-frame">
+      <div class="mock-dashboard" role="img" aria-label="The Safewalk live pickup dashboard for a Sunday service: 47 children checked in, 6 in the car line and 31 picked up, all verified, with a queue showing each child's room and status.">
+        <div class="mock__bar" aria-hidden="true">
+          <div class="mock__dots"><span></span><span></span><span></span></div>
+          <span class="mock__bar-title">Safewalk — Live Pickup Dashboard</span>
+        </div>
+        <div class="mock__body" aria-hidden="true">
+          <div class="mock-dashboard__head">
+            <span class="mock-dashboard__logo">Safewalk</span>
+            <span class="mock-dashboard__session">● Sunday Service 10:30am</span>
+          </div>
+          <div class="mock-stats">
+            <div class="mock-stat">
+              <span class="mock-stat__value">47</span>
+              <span class="mock-stat__label">Checked in</span>
+              <span class="mock__badge mock__badge--sky">2 services</span>
+            </div>
+            <div class="mock-stat">
+              <span class="mock-stat__value">6</span>
+              <span class="mock-stat__label">In car line</span>
+              <span class="mock__badge mock__badge--amber">Active now</span>
+            </div>
+            <div class="mock-stat">
+              <span class="mock-stat__value">31</span>
+              <span class="mock-stat__label">Picked up</span>
+              <span class="mock__badge mock__badge--green">All verified</span>
+            </div>
+          </div>
+          <div class="mock-queue">
+            <div class="mock-queue__head"><span>Child · Room</span><span>Status</span></div>
+            <div class="mock-queue__row">
+              <span class="mock__avatar mock__avatar--blue">EJ</span>
+              <div class="mock-queue__who"><span class="mock-queue__name">Emma Johnson</span><span class="mock-queue__room">Rm 3 · Butterflies</span></div>
+              <span class="mock__status mock__status--ready">Ready</span>
+            </div>
+            <div class="mock-queue__row">
+              <span class="mock__avatar mock__avatar--green">LM</span>
+              <div class="mock-queue__who"><span class="mock-queue__name">Liam Martinez</span><span class="mock-queue__room">Rm 1 · Rainbows</span></div>
+              <span class="mock__status mock__status--line">In car line</span>
+            </div>
+            <div class="mock-queue__row">
+              <span class="mock__avatar mock__avatar--purple">AS</span>
+              <div class="mock-queue__who"><span class="mock-queue__name">Ava Smith</span><span class="mock-queue__room">Rm 5 · Stars</span></div>
+              <span class="mock__status mock__status--waiting">Waiting</span>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-    <a href="#demo" class="btn-mid">Request a free demo →</a>
+    <ol class="steps">
+      <li class="steps__item">
+        <span class="steps__num" aria-hidden="true">1</span>
+        <div class="steps__text">
+          <h3 class="steps__title">Scan the tag</h3>
+          <p class="steps__body">Only the children that adult is authorized to pick up appear.</p>
+        </div>
+      </li>
+      <li class="steps__item">
+        <span class="steps__num" aria-hidden="true">2</span>
+        <div class="steps__text">
+          <h3 class="steps__title">Call them to the door</h3>
+          <p class="steps__body">Each room's live display shows who's being called.</p>
+        </div>
+      </li>
+      <li class="steps__item">
+        <span class="steps__num" aria-hidden="true">3</span>
+        <div class="steps__text">
+          <h3 class="steps__title">Confirm the handoff</h3>
+          <p class="steps__body">Who, to whom, when and by whom is logged automatically.</p>
+        </div>
+      </li>
+    </ol>
   </div>
-</div>
+</section>
 
-<!-- WHO -->
-<section class="who-section">
-  <div class="who-bg">
-    <div class="who-blob wb-1"></div>
-    <div class="who-blob wb-2"></div>
+<!-- BEFORE / AFTER -->
+<section class="container section-stack section--why">
+  <div class="section-intro section-intro--wide">
+    <span class="eyebrow">Why it matters</span>
+    <h2 class="section-title">Pickup is the moment that matters most.</h2>
+    <p class="lede">Check-in gets the attention. At release, a busy staff member or volunteer has to make the call, fast, often without knowing the family.</p>
   </div>
-  <div class="who-inner">
-    <div class="who-label" data-reveal>Built for</div>
-    <h2 class="who-title" data-reveal>Any organization<br/>with a pickup line</h2>
-    <div class="who-grid">
-      <div class="who-card" data-reveal>
-        <div class="who-icon"><svg fill="none" stroke-width="1.8" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.966 8.966 0 00-6 2.292m0-14.25v14.25"/></svg></div>
-        <div class="who-card-title">Schools</div>
-        <div class="who-card-body">End the 3pm chaos. Manage car line pickup with a live dashboard your front office staff can actually use.</div>
+  <div class="compare">
+    <div class="compare__col compare__col--before">
+      <span class="compare__heading">Pickup today</span>
+      <div class="compare__rows">
+        <div class="compare__row"><span class="compare__label">Is this adult allowed?</span><span>Someone's memory, or a printed list</span></div>
+        <div class="compare__row"><span class="compare__label">Which child is next?</span><span>Walkie-talkies down a hallway</span></div>
+        <div class="compare__row"><span class="compare__label">Who's still here?</span><span>A clipboard and a headcount</span></div>
+        <div class="compare__row"><span class="compare__label">What happened?</span><span>Nothing written down</span></div>
       </div>
-      <div class="who-card" data-reveal>
-        <div class="who-icon"><svg fill="none" stroke-width="1.8" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 12l8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25"/></svg></div>
-        <div class="who-card-title">Daycares</div>
-        <div class="who-card-body">Verify authorized pickups instantly. Keep a digital log of every release — no clipboards, no liability gaps.</div>
-      </div>
-      <div class="who-card" data-reveal>
-        <div class="who-icon"><svg fill="none" stroke-width="1.8" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M11.48 3.499a.562.562 0 011.04 0l2.125 5.111a.563.563 0 00.475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 00-.182.557l1.285 5.385a.562.562 0 01-.84.61l-4.725-2.885a.563.563 0 00-.586 0L6.982 20.54a.562.562 0 01-.84-.61l1.285-5.386a.562.562 0 00-.182-.557l-4.204-3.602a.563.563 0 01.321-.988l5.518-.442a.563.563 0 00.475-.345L11.48 3.5z"/></svg></div>
-        <div class="who-card-title">Churches</div>
-        <div class="who-card-body">Works with Planning Center Online or a simple manual roster. Designed for Sunday morning volunteers who need something that just works.</div>
-      </div>
-      <div class="who-card" data-reveal>
-        <div class="who-icon"><svg fill="none" stroke-width="1.8" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19.128a9.38 9.38 0 002.625.372 9.337 9.337 0 004.121-.952 4.125 4.125 0 00-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 018.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0111.964-3.07M12 6.375a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zm8.25 2.25a2.625 2.625 0 11-5.25 0 2.625 2.625 0 015.25 0z"/></svg></div>
-        <div class="who-card-title">After-school programs</div>
-        <div class="who-card-body">Multiple pickup windows, multiple staff — Safewalk keeps everyone coordinated in real time without a radio in sight.</div>
+    </div>
+    <div class="compare__col compare__col--after">
+      <span class="compare__heading">With Safewalk</span>
+      <div class="compare__rows">
+        <div class="compare__row"><span class="compare__label">Is this adult allowed?</span><span>Scan the tag: only their children appear</span></div>
+        <div class="compare__row"><span class="compare__label">Which child is next?</span><span>A live display in every room</span></div>
+        <div class="compare__row"><span class="compare__label">Who's still here?</span><span>A real-time dashboard</span></div>
+        <div class="compare__row"><span class="compare__label">What happened?</span><span>A time-stamped release log</span></div>
       </div>
     </div>
   </div>
 </section>
 
 <!-- FEATURES -->
-<section class="features-section" id="features">
-  <div data-reveal>
-    <div class="section-label">Features</div>
-    <h2 class="section-title">Everything pickup<br/>actually needs</h2>
-  </div>
-  <div class="features-grid">
-    <div class="feature-card" data-reveal>
-      <div class="feature-icon fi-blue"><svg fill="none" stroke="#0369A1" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 4.875c0-.621.504-1.125 1.125-1.125h4.5c.621 0 1.125.504 1.125 1.125v4.5c0 .621-.504 1.125-1.125 1.125h-4.5A1.125 1.125 0 013.75 9.375v-4.5zm9.75 0c0-.621.504-1.125 1.125-1.125h4.5c.621 0 1.125.504 1.125 1.125v4.5c0 .621-.504 1.125-1.125 1.125h-4.5A1.125 1.125 0 0113.5 9.375v-4.5z"/><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 14.625c0-.621.504-1.125 1.125-1.125h4.5c.621 0 1.125.504 1.125 1.125v4.5c0 .621-.504 1.125-1.125 1.125h-4.5a1.125 1.125 0 01-1.125-1.125v-4.5zm9.75-4.5c0-.621.504-1.125 1.125-1.125h4.5c.621 0 1.125.504 1.125 1.125v4.5c0 .621-.504 1.125-1.125 1.125h-4.5A1.125 1.125 0 0113.5 14.625v-4.5z"/></svg></div>
-      <div class="feature-title">Barcode scanning</div>
-      <div class="feature-body">Scan a parent's tag in under a second. Their authorized children appear instantly — no searching, no typing.</div>
+<section class="band--panel" id="features">
+  <div class="container section-stack section--pad">
+    <div class="section-intro section-intro--pricing">
+      <span class="eyebrow">What's included</span>
+      <h2 class="section-title">A record of every release, not a clipboard.</h2>
     </div>
-    <div class="feature-card" data-reveal>
-      <div class="feature-icon fi-green"><svg fill="none" stroke="#15803D" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z"/></svg></div>
-      <div class="feature-title">Verified release log</div>
-      <div class="feature-body">Every pickup is time-stamped and logged. Know exactly who was released, when, and by which volunteer.</div>
-    </div>
-    <div class="feature-card" data-reveal>
-      <div class="feature-icon fi-purple"><svg fill="none" stroke="#6D28D9" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 20.25h12m-7.5-3v3m3-3v3m-10.125-3h17.25c.621 0 1.125-.504 1.125-1.125V4.875c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v11.25c0 .621.504 1.125 1.125 1.125z"/></svg></div>
-      <div class="feature-title">Live classroom display</div>
-      <div class="feature-body">Teachers see a real-time screen showing which children are being called. No phones, no walkie-talkies needed.</div>
-    </div>
-    <div class="feature-card" data-reveal>
-      <div class="feature-icon fi-amber"><svg fill="none" stroke="#92400E" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 013 19.875v-6.75zM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V8.625zM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V4.125z"/></svg></div>
-      <div class="feature-title">Attendance reports</div>
-      <div class="feature-body">Charts, trends, classroom breakdowns, and CSV exports. See exactly who showed up and when, across every session.</div>
-    </div>
-    <div class="feature-card" data-reveal>
-      <div class="feature-icon fi-blue"><svg fill="none" stroke="#0369A1" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13.19 8.688a4.5 4.5 0 011.242 7.244l-4.5 4.5a4.5 4.5 0 01-6.364-6.364l1.757-1.757m13.35-.622l1.757-1.757a4.5 4.5 0 00-6.364-6.364l-4.5 4.5a4.5 4.5 0 001.242 7.244"/></svg></div>
-      <div class="feature-title">Works with your systems</div>
-      <div class="feature-body">Integrates with Planning Center Online. Works standalone with a simple CSV roster upload. More integrations coming.</div>
-    </div>
-    <div class="feature-card" data-reveal>
-      <div class="feature-icon fi-green"><svg fill="none" stroke="#15803D" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M10.5 1.5H8.25A2.25 2.25 0 006 3.75v16.5a2.25 2.25 0 002.25 2.25h7.5A2.25 2.25 0 0018 20.25V3.75a2.25 2.25 0 00-2.25-2.25H13.5m-3 0V3h3V1.5m-3 0h3m-3 18h3"/></svg></div>
-      <div class="feature-title">Works on any device</div>
-      <div class="feature-body">Phone, tablet, or laptop — your volunteers use what they already have. No special hardware required to get started.</div>
+    <div class="card-grid card-grid--features">
+      <div class="card card--feature">
+        <h3 class="card__title card__title--lg">Verified release log</h3>
+        <p class="card__text">Every pickup is time-stamped: which child, released to whom, confirmed by whom. Export it any time.</p>
+        <div class="table-scroll">
+          <table class="data-table">
+            <thead><tr><th>Time</th><th>Child</th><th>Released to</th><th>Confirmed by</th></tr></thead>
+            <tbody>
+              <tr><td class="num">3:12</td><td>Liam M.</td><td>Tag #4821</td><td>J. Ruiz</td></tr>
+              <tr><td class="num">3:12</td><td>Sofia M.</td><td>Tag #4821</td><td>J. Ruiz</td></tr>
+              <tr><td class="num">3:14</td><td>Ava S.</td><td>Tag #3307</td><td>K. Owens</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="card-grid card-grid--features-sm">
+        <div class="card card--feature-sm">
+          <svg class="card__icon" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M3 7V5a2 2 0 0 1 2-2h2M17 3h2a2 2 0 0 1 2 2v2M21 17v2a2 2 0 0 1-2 2h-2M7 21H5a2 2 0 0 1-2-2v-2M7 8v8M10 8v8M13 8v8M17 8v8"/></svg>
+          <h3 class="card__title">Barcode scanning</h3>
+          <p class="card__text">Scan a tag in under a second. No searching, no typing.</p>
+        </div>
+        <div class="card card--feature-sm">
+          <svg class="card__icon" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="2.5" y="4" width="19" height="13" rx="1.5"/><path d="M8 21h8M12 17v4"/></svg>
+          <h3 class="card__title">Live room display</h3>
+          <p class="card__text">Any screen in the room shows who's being called.</p>
+        </div>
+        <div class="card card--feature-sm">
+          <svg class="card__icon" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1"/></svg>
+          <h3 class="card__title">Your roster, your way</h3>
+          <p class="card__text">Upload a simple CSV roster, or sync with Planning Center.</p>
+        </div>
+        <div class="card card--feature-sm">
+          <svg class="card__icon" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg>
+          <h3 class="card__title">Attendance reports</h3>
+          <p class="card__text">Trends, room breakdowns and CSV exports.</p>
+        </div>
+      </div>
     </div>
   </div>
 </section>
 
 <!-- FOUNDER -->
-<section class="founder-section">
-  <div class="founder-inner" data-reveal>
-    <div class="founder-avatar">N</div>
-    <div class="founder-body">
-      <p class="founder-label">Why I built this</p>
-      <p class="founder-quote">"I run pickup every Sunday at my church — and I built Safewalk because nothing else was simple enough for volunteers to just pick up and use."</p>
-      <p class="founder-body-text">Safewalk started as an internal tool for our children's ministry car line. It's been running live every week and has made pickup measurably safer and calmer. Now I'm bringing it to schools, daycares, and other churches who are still managing pickup with paper lists, walkie-talkies, or nothing at all.</p>
-      <p class="founder-body-text">I'm offering free setup to early adopters because I want to build this the right way — alongside the people who actually run pickup every day.</p>
-      <p class="founder-sig">— Nick, Founder of Safewalk</p>
+<section class="container founder">
+  <figure class="photo-slot photo-slot--founder">
+    <span class="photo-slot__placeholder">[Photo: Nick at pickup]</span>
+    <!-- TODO(content): add /assets/photos/founder.jpg (4:5 portrait, e.g. 760×950) then uncomment:
+    <img class="photo-slot__img" src="/assets/photos/founder.jpg" alt="Nick Garcia, founder of Safewalk, at pickup" width="760" height="950" loading="lazy">
+    -->
+  </figure>
+  <div class="founder__copy">
+    <span class="eyebrow">Why Safewalk exists</span>
+    <blockquote class="founder__quote">“I run pickup every week. I built Safewalk because nothing else was simple enough for volunteers to just pick up and use.”</blockquote>
+    <p class="founder__body">It started as a tool for my church's car line and has run live every Sunday since. Now I'm bringing it to schools, daycares and other organizations still managing pickup with paper lists, radios, or nothing at all.</p>
+    <div class="founder__sig">
+      <strong>Nick Garcia</strong>
+      <span>Founder, Safewalk</span>
     </div>
   </div>
 </section>
 
-<!-- CTA / DEMO -->
-<section class="cta-section" id="demo">
-  <div class="cta-inner">
-    <div class="cta-blob cta-blob-1"></div>
-    <div class="cta-blob cta-blob-2"></div>
-    <div class="cta-left">
-      <h2 class="cta-title">See Safewalk in action</h2>
-      <p class="cta-sub">We'll walk you through the full pickup flow in 15 minutes. Free setup for early adopters — paid plans from $49/mo after.</p>
+<!-- FAQ -->
+<section class="band--panel" id="faq">
+  <div class="container faq section--pad">
+    <div class="section-intro">
+      <span class="eyebrow">Safety &amp; data</span>
+      <h2 class="section-title section-title--sm">Good questions to ask about anything that touches kids.</h2>
+      <p class="founder__body">Something else? Email <a href="mailto:hello@getsafewalk.com"><strong>hello@getsafewalk.com</strong></a>.</p>
     </div>
-    <div class="cta-right">
+    <div class="faq__list">
+      <details class="faq__item">
+        <summary>Where is children's data stored, and who can see it?<span class="faq__plus" aria-hidden="true">+</span></summary>
+        <!-- TODO(content): describe hosting, who has access (roles), and how long records are kept -->
+        <p>[DESCRIBE HOSTING, WHO HAS ACCESS (ROLES), AND HOW LONG RECORDS ARE KEPT]</p>
+      </details>
+      <details class="faq__item">
+        <summary>What happens if an adult's tag doesn't match?<span class="faq__plus" aria-hidden="true">+</span></summary>
+        <!-- TODO(content): describe the mismatch / no-tag flow -->
+        <p>[DESCRIBE THE MISMATCH / NO-TAG FLOW]</p>
+      </details>
+      <details class="faq__item">
+        <summary>Do we need any special software or hardware?<span class="faq__plus" aria-hidden="true">+</span></summary>
+        <p>No. A phone, tablet or laptop you already have is enough to start, and a simple CSV roster works. Churches can sync with Planning Center.</p>
+      </details>
+      <details class="faq__item">
+        <summary>How long does setup take?<span class="faq__plus" aria-hidden="true">+</span></summary>
+        <!-- TODO(content): typical setup time -->
+        <p>[TYPICAL SETUP TIME], and setup is free for early adopters.</p>
+      </details>
+    </div>
+  </div>
+</section>
 
-      <!-- Success message (hidden until submission) -->
-      <div class="form-success" id="form-success">
-        <div class="success-icon">✓</div>
-        <div class="success-title">You're on the list!</div>
-        <div class="success-sub">Thanks for reaching out. We'll be in touch within one business day to schedule your demo.</div>
-      </div>
+<!-- PRICING -->
+<section class="container pricing" id="pricing">
+  <div class="section-intro section-intro--narrow">
+    <span class="eyebrow">Pricing</span>
+    <h2 class="section-title section-title--sm">Simple pricing, and setup is on us.</h2>
+    <p class="founder__body">Early adopters get free setup, and we'll fit Safewalk to how your pickup actually runs.</p>
+  </div>
+  <div class="card card--feature card--shadow">
+    <div class="pricing__price">
+      <span class="pricing__from">From</span>
+      <span class="pricing__amount">$49</span>
+      <span class="pricing__per">/ month</span>
+    </div>
+    <ul class="check-list">
+      <li><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>Free setup for early adopters</li>
+      <!-- TODO(content): confirm unlimited users/devices -->
+      <li><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>Unlimited staff, volunteers and devices [CONFIRM]</li>
+      <li><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>CSV roster or Planning Center sync</li>
+      <li><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>Release log and attendance exports</li>
+    </ul>
+  </div>
+</section>
 
-      <!-- The form -->
-      <form id="demo-form">
-        <div class="cta-field">
-          <div class="cta-form-label">Your name &amp; organization</div>
-          <input type="text" id="f-name" name="name" placeholder="Jane Smith — Lincoln Elementary" autocomplete="name"/>
-          <div class="field-error" id="err-name">Please enter your name and organization.</div>
+<!-- DEMO FORM -->
+<section class="band--plum" id="demo">
+  <div class="container demo section--pad">
+    <div class="demo__copy">
+      <h2 class="section-title section-title--lg">Let's walk through your pickup together.</h2>
+      <p class="demo__lede">15 minutes, live, built around your rooms and your roster. You'll hear back from Nick within one business day.</p>
+    </div>
+    <div class="card card--panel">
+      <form class="demo-form" id="demo-form" action="https://formspree.io/f/mojbpwpj" method="POST" novalidate>
+        <input type="hidden" name="source_page" value="home">
+        <div class="field">
+          <label for="m-name">Your name</label>
+          <input id="m-name" name="name" type="text" autocomplete="name" placeholder="Jane Smith" required aria-describedby="err-name">
+          <p class="field__error" id="err-name" hidden>Please enter your name.</p>
         </div>
-        <div class="cta-field">
-          <div class="cta-form-label">Email address</div>
-          <input type="email" id="f-email" name="email" placeholder="jane@school.org" autocomplete="email"/>
-          <div class="field-error" id="err-email">Please enter a valid email address.</div>
+        <div class="field">
+          <label for="m-org">Organization</label>
+          <input id="m-org" name="organization" type="text" autocomplete="organization" placeholder="Lincoln Elementary" required aria-describedby="err-organization">
+          <p class="field__error" id="err-organization" hidden>Please enter your organization.</p>
         </div>
-        <button type="submit" class="btn-cta" id="submit-btn">
-          <div class="spinner" id="spinner"></div>
-          <span class="btn-label">Request a free demo →</span>
+        <div class="field">
+          <label for="m-type">Type of organization</label>
+          <select id="m-type" name="org_type">
+            <option>Church</option>
+            <option>School</option>
+            <option>Daycare</option>
+            <option>After-school program</option>
+            <option>Other</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="m-email">Email</label>
+          <input id="m-email" name="email" type="email" autocomplete="email" placeholder="jane@school.org" required aria-describedby="err-email">
+          <p class="field__error" id="err-email" hidden>Please enter a valid email address.</p>
+        </div>
+        <button class="btn btn--primary btn--block" type="submit">
+          <span class="btn__spinner" aria-hidden="true"></span>
+          <span class="btn__label">Request a walkthrough</span>
         </button>
-        <div class="cta-note">No commitment. We'll reach out within one business day.<br/>Or email us directly: <a href="mailto:hello@getsafewalk.com" style="color:rgba(255,255,255,0.5);text-decoration:underline;">hello@getsafewalk.com</a></div>
-        <div class="field-error" id="err-general" style="text-align:center;margin-top:8px;"></div>
+        <p class="form-note">No commitment. Or email <a href="mailto:hello@getsafewalk.com">hello@getsafewalk.com</a></p>
+        <p class="form-error" id="form-error" role="alert" hidden></p>
       </form>
-
+      <div class="form-success" id="form-success" role="status" tabindex="-1" hidden>
+        <span class="form-success__icon" aria-hidden="true">✓</span>
+        <h3 class="form-success__title">Thanks!</h3>
+        <p class="form-success__text">Nick will be in touch within one business day to schedule your walkthrough.</p>
+      </div>
     </div>
   </div>
 </section>
 
-<footer>
-  <span class="footer-logo">Safe<span>walk</span></span>
-  <span class="footer-copy">&copy; 2026 Safewalk &mdash; A <a href="#" style="color:var(--muted);text-decoration:none;">Groundswell</a> product &mdash; <a href="mailto:hello@getsafewalk.com" style="color:var(--muted);text-decoration:none;">hello@getsafewalk.com</a></span>
+</main>
+
+<footer class="site-footer">
+  <div class="container site-footer__inner">
+    <span class="site-footer__logo">Safewalk</span>
+    <div class="site-footer__links">
+      <a href="/churches/">For churches</a>
+      <a href="#schools">For schools</a>
+      <a href="#daycares">For daycares</a>
+    </div>
+    <span>© 2026 Safewalk · A Groundswell product · <a href="mailto:hello@getsafewalk.com">hello@getsafewalk.com</a></span>
+  </div>
 </footer>
 
-<script>
-// Scroll reveal
-const observer = new IntersectionObserver((entries) => {
-  entries.forEach(e => {
-    if(e.isIntersecting){ e.target.classList.add('visible'); observer.unobserve(e.target); }
-  });
-},{threshold:0.12});
-document.querySelectorAll('[data-reveal]').forEach(el => observer.observe(el));
-
-// Stagger grid reveals
-document.querySelectorAll('.steps, .who-grid, .features-grid').forEach(grid => {
-  grid.querySelectorAll('[data-reveal]').forEach((el,i) => {
-    el.style.transitionDelay = (i * 0.08) + 's';
-  });
-});
-
-// Form submission
-document.getElementById('demo-form').addEventListener('submit', async function(e) {
-  e.preventDefault();
-
-  const nameEl  = document.getElementById('f-name');
-  const emailEl = document.getElementById('f-email');
-  const btn     = document.getElementById('submit-btn');
-  const errName  = document.getElementById('err-name');
-  const errEmail = document.getElementById('err-email');
-  const errGen   = document.getElementById('err-general');
-
-  // Reset errors
-  [nameEl, emailEl].forEach(el => el.classList.remove('input-error'));
-  [errName, errEmail, errGen].forEach(el => el.classList.remove('visible'));
-
-  const name  = nameEl.value.trim();
-  const email = emailEl.value.trim();
-  const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-
-  // Validate
-  let valid = true;
-  if (!name) {
-    nameEl.classList.add('input-error');
-    errName.classList.add('visible');
-    valid = false;
-  }
-  if (!emailOk) {
-    emailEl.classList.add('input-error');
-    errEmail.classList.add('visible');
-    valid = false;
-  }
-  if (!valid) return;
-
-  // Loading state
-  btn.disabled = true;
-  btn.classList.add('loading');
-
-  try {
-    const res = await fetch('https://formspree.io/f/mojbpwpj', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-      body: JSON.stringify({ name, email })
-    });
-    const data = await res.json();
-    if (res.ok) {
-      document.getElementById('demo-form').style.display = 'none';
-      document.getElementById('form-success').classList.add('visible');
-    } else {
-      throw new Error(data?.error || 'Submission failed');
-    }
-  } catch(err) {
-    errGen.textContent = 'Something went wrong — please try again or email us directly.';
-    errGen.classList.add('visible');
-    btn.disabled = false;
-    btn.classList.remove('loading');
-  }
-});
-</script>
+<script src="/assets/js/demo-form.js" defer></script>
 </body>
 </html>

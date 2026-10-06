@@ -1,0 +1,54 @@
+/* Safewalk "Warm Welcome" design tokens
+   Fonts (Google Fonts):
+   https://fonts.googleapis.com/css2?family=Young+Serif&family=Figtree:wght@400;500;600;700&display=swap
+   Product mockups only (dashboard + classroom display, to match the app):
+   &family=DM+Sans:wght@400;500&family=DM+Serif+Display
+*/
+:root {
+  /* Surfaces */
+  --sw-bg: #FBEFE6;          /* page background (warm peach) */
+  --sw-panel: #F5E2D5;       /* alternate section background */
+  --sw-photo: #F1D9C8;       /* photo frames, product-mockup backdrop */
+  --sw-card: #FFFFFF;
+  --sw-plum: #3A2232;        /* dark bands, primary text, nav button */
+  --sw-plum-deep: #2C1926;   /* footer */
+
+  /* Text */
+  --sw-ink: #3A2232;
+  --sw-body: #5B4351;        /* paragraph text on light backgrounds */
+  --sw-muted: #6E5060;       /* captions, secondary labels */
+  --sw-eyebrow: #8A3B2A;     /* section labels ("How it works") */
+  --sw-on-dark: #FBEFE6;
+  --sw-on-dark-muted: #E4CFC6;
+
+  /* Accent */
+  --sw-accent: #C8553D;      /* terracotta: primary CTA, logo, step numbers (white text on it) */
+
+  /* Lines */
+  --sw-line: #EBD5C6;
+  --sw-line-soft: #F0DDD0;
+  --sw-line-strong: #D9BFAF; /* secondary button border */
+  --sw-input-border: #B8998A;
+
+  /* Status */
+  --sw-verified: #1F6B3F;
+  --sw-verified-bg: #E3F1E6;
+
+  /* Type */
+  --sw-font-display: 'Young Serif', Georgia, serif;          /* headings, weight 400 */
+  --sw-font-body: 'Figtree', 'Helvetica Neue', system-ui, sans-serif;
+
+  /* Shape */
+  --sw-radius-card: 28px;
+  --sw-radius-input: 14px;
+  --sw-radius-pill: 999px;
+  --sw-arch: 230px 230px 28px 28px;   /* signature arch: photo frames */
+  --sw-arch-sm: 24px 24px 8px 8px;    /* step numbers, logo mark (20px 20px 8px 8px at 40px) */
+  --sw-shadow-card: 0 16px 40px rgba(58, 34, 50, 0.08);
+  --sw-shadow-float: 0 18px 40px rgba(58, 34, 50, 0.14);
+
+  /* Layout */
+  --sw-max: 1240px;
+  --sw-gutter: 24px;
+  --sw-section-y: 104px;
+}
